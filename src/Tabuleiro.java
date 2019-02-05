@@ -50,7 +50,7 @@ public class Tabuleiro extends JPanel implements ActionListener{
 		colunaAtual = aleatorio.nextInt(8);	
 		jogada = 0;
 		tabuleiro = new int[8][8];
-		maximoTabuleiro = acessabilidade[0].length;
+		maximoTabuleiro = acessabilidade[0].length - 1;
 		minimoTabuleiro = 0;
 		
 		for(int i = 0; i < casaTabuleiro.length; i++) {
@@ -80,7 +80,81 @@ public class Tabuleiro extends JPanel implements ActionListener{
 			
 		}
 		
-		
+		for(int i = 0; i < 64; i++){
+			
+			jogada = 0;
+			System.out.printf("Jogada nº%d\n", i+1);
+			
+			//Atualiza os valores do array acessabilidade, de acordo com a posição do cavalo.
+			for(int x = 0; x < 8; x++){
+				if(linhaAtual + Cavalo2.getHorizontal()[x] >= minimoTabuleiro 
+				   && linhaAtual + Cavalo2.getHorizontal()[x] <= maximoTabuleiro 
+				   && colunaAtual + Cavalo2.getVertical()[x] >= minimoTabuleiro
+			       && colunaAtual + Cavalo2.getVertical()[x] <= maximoTabuleiro){
+					if(acessabilidade[linhaAtual + Cavalo2.getHorizontal()[x]][colunaAtual + Cavalo2.getVertical()[x]] > 0){
+						acessabilidade[linhaAtual + Cavalo2.getHorizontal()[x]][colunaAtual + Cavalo2.getVertical()[x]]--;
+					}
+					
+				}
+			}
+			
+			//Define a próxima jogada a ser feita, de acordo com as posições que o cavalo pode alcançar 
+			//a partir da sua posição atual, e também buscando a posição com a menor acessabilidade, que ainda não foi visitada.
+			
+			do{
+				
+				int menorAcessabilidade = 1000, menorAcessabilidadeLinha, menorAcessabilidadeColuna;
+				
+				
+				linhaAcessabilidade = linhaAtual;
+				colunaAcessabilidade = colunaAtual;
+				
+				menorAcessabilidadeLinha = linhaAcessabilidade;
+				menorAcessabilidadeColuna = colunaAcessabilidade;
+				
+				
+				for(int x = 0; x < 8; x++){
+					if(linhaAtual + Cavalo2.getHorizontal()[x] >= minimoTabuleiro 
+					   && linhaAtual + Cavalo2.getHorizontal()[x] <= maximoTabuleiro 
+					   && colunaAtual + Cavalo2.getVertical()[x] >= minimoTabuleiro
+					   && colunaAtual + Cavalo2.getVertical()[x] <= maximoTabuleiro){
+						
+						linhaAcessabilidade = linhaAtual + Cavalo2.getHorizontal()[x];
+						colunaAcessabilidade = colunaAtual + Cavalo2.getVertical()[x];
+						
+						if(acessabilidade[linhaAcessabilidade][colunaAcessabilidade] <= menorAcessabilidade){
+							if(tabuleiro[linhaAcessabilidade][colunaAcessabilidade] == 0){
+								if(acessabilidade[linhaAcessabilidade][colunaAcessabilidade] == menorAcessabilidade){
+									
+								}
+								menorAcessabilidade = acessabilidade[linhaAcessabilidade][colunaAcessabilidade];
+								jogada = x;
+							}
+						}
+					}
+					
+					
+				}
+				
+				
+			
+				
+			}while(linhaAtual + Cavalo2.getHorizontal()[jogada] < minimoTabuleiro 
+					|| linhaAtual + Cavalo2.getHorizontal()[jogada] > maximoTabuleiro 
+					|| colunaAtual + Cavalo2.getVertical()[jogada] < minimoTabuleiro
+					|| colunaAtual + Cavalo2.getVertical()[jogada] > maximoTabuleiro);
+			
+			
+			
+			linhaAtual += Cavalo2.getHorizontal()[jogada];
+			colunaAtual += Cavalo2.getVertical()[jogada];
+			
+			tabuleiro[linhaAtual][colunaAtual] = i+1;
+			
+			System.out.println(linhaAtual);
+			System.out.println(colunaAtual);
+			
+			}
 		
 
 	}
