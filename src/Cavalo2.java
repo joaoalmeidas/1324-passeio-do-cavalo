@@ -5,4 +5,14 @@ public class Cavalo2 {
 	private final static int[] horizontal = {2, 1, -1, -2, -2, -1, 1, 2};
 	private final static int[] vertical = {-1, -2, -2, -1, 1, 2, 2, 1};
 	
+	
+	public static int[] getHorizontal() {
+		return horizontal;
+	}
+	public static int[] getVertical() {
+		return vertical;
+	}
+	
+	
+	
 }
