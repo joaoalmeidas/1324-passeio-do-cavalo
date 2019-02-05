@@ -1,3 +1,4 @@
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -6,8 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.Timer;
 
 public class Tabuleiro extends JPanel implements ActionListener{
@@ -21,6 +22,8 @@ public class Tabuleiro extends JPanel implements ActionListener{
 			  {3, 4, 6, 6, 6, 6, 4, 3},
 			  {2, 3, 4, 4, 4, 4, 3, 2}
 			  };
+	
+	private int[][] tabuleiro;
 	
 	private JPanel[][] casaTabuleiro;
 	
@@ -46,6 +49,7 @@ public class Tabuleiro extends JPanel implements ActionListener{
 		linhaAtual = aleatorio.nextInt(8);
 		colunaAtual = aleatorio.nextInt(8);	
 		jogada = 0;
+		tabuleiro = new int[8][8];
 		maximoTabuleiro = acessabilidade[0].length;
 		minimoTabuleiro = 0;
 		
@@ -76,26 +80,23 @@ public class Tabuleiro extends JPanel implements ActionListener{
 			
 		}
 		
+		
+		
 
 	}
 	
 	@Override
 	public void paintComponent(Graphics g) {
+
 		
-		for(int i = 0; i < 8; i++) {
-			
-			for(int j = 0; j < 8; j++) {
-				
-				
-				
-			}
-			
-		}
-		
+
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
+		
+		casaTabuleiro[aleatorio.nextInt(8)][aleatorio.nextInt(8)].setBackground(Color.BLUE);
+		
 		repaint();
 		
 	}

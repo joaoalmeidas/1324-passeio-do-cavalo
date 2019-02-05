@@ -1,4 +1,6 @@
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -27,6 +29,8 @@ public class CavaloFrame extends JFrame {
 		
 		add(panelControle, BorderLayout.NORTH);
 		add(panelTabuleiro, BorderLayout.CENTER);
+		
+		
 		
 	}
 	
