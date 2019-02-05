@@ -30,20 +30,26 @@ public class Tabuleiro extends JPanel implements ActionListener{
 	
 	private Timer tempo ;
 	
-	private int linhaAtual, colunaAtual, jogada, maximoTabuleiro, minimoTabuleiro, linhaAcessabilidade, colunaAcessabilidade, jogadaAtual = 1; 
+	private int linhaAtual, colunaAtual, jogada, maximoTabuleiro, minimoTabuleiro, linhaAcessabilidade, colunaAcessabilidade, jogadaAtual = 1,
+			primeiraLinha, primeiraColuna; 
 	
+	private String passeio;
 	
 	public Tabuleiro() {
 		
 		setLayout(new GridLayout(8, 8));
 		casaTabuleiro = new JTextField[8][8];
 		
-		tempo = new Timer(1000, this);
+		tempo = new Timer(100, this);
 		tempo.start();
 		
 		
 		linhaAtual = aleatorio.nextInt(8);
 		colunaAtual = aleatorio.nextInt(8);	
+		
+		primeiraLinha = linhaAtual;
+		primeiraColuna = colunaAtual;
+		
 		jogada = 0;
 		tabuleiro = new int[8][8];
 		maximoTabuleiro = acessabilidade[0].length - 1;
@@ -146,6 +152,18 @@ public class Tabuleiro extends JPanel implements ActionListener{
 			
 			tabuleiro[linhaAtual][colunaAtual] = i+1;
 			
+			if(i == 63) {
+				
+				if(linhaAtual == primeiraLinha && colunaAtual == primeiraColuna) {
+					
+					passeio = "Passeio fechado.";
+					
+				}else {
+					
+					passeio = "Passeio aberto.";
+					
+				}
+			}
 			
 			}
 		
@@ -164,6 +182,7 @@ public class Tabuleiro extends JPanel implements ActionListener{
 			
 			repaint();
 		}else {
+			
 			
 			tempo.stop();
 			
@@ -186,6 +205,8 @@ public class Tabuleiro extends JPanel implements ActionListener{
 					
 					posicao[0] = i;
 					posicao[1] = j;
+					
+					
 					return posicao;
 					
 				}
@@ -194,8 +215,24 @@ public class Tabuleiro extends JPanel implements ActionListener{
 			
 		}
 		
+
+
 		return posicao;
 	}
+
+
+	public String getPasseio() {
+		return passeio;
+	}
+
+
+	public void setPasseio(String passeio) {
+		this.passeio = passeio;
+	}
+
+	
+	
+	
 	
 	
 	
