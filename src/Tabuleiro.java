@@ -1,14 +1,12 @@
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
 
-import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.Timer;
 
 public class Tabuleiro extends JPanel implements ActionListener{
@@ -25,26 +23,24 @@ public class Tabuleiro extends JPanel implements ActionListener{
 	
 	private int[][] tabuleiro;
 	
-	private JPanel[][] casaTabuleiro;
+	private JTextField[][] casaTabuleiro;
 	
 	private Random aleatorio = new Random();
 	
-	private Cavalo2 cavalo;
 	
 	private Timer tempo ;
 	
-	private int linhaAtual, colunaAtual, jogada, maximoTabuleiro, minimoTabuleiro, linhaAcessabilidade, colunaAcessabilidade; 
+	private int linhaAtual, colunaAtual, jogada, maximoTabuleiro, minimoTabuleiro, linhaAcessabilidade, colunaAcessabilidade, jogadaAtual = 1; 
 	
 	
 	public Tabuleiro() {
 		
 		setLayout(new GridLayout(8, 8));
-		casaTabuleiro = new JPanel[8][8];
+		casaTabuleiro = new JTextField[8][8];
 		
 		tempo = new Timer(1000, this);
 		tempo.start();
 		
-		cavalo = new Cavalo2();
 		
 		linhaAtual = aleatorio.nextInt(8);
 		colunaAtual = aleatorio.nextInt(8);	
@@ -58,7 +54,7 @@ public class Tabuleiro extends JPanel implements ActionListener{
 			for(int j = 0; j < casaTabuleiro[0].length; j++) {
 				
 				
-				casaTabuleiro[i][j] = new JPanel();
+				casaTabuleiro[i][j] = new JTextField();
 				casaTabuleiro[i][j].setFont(new Font("Arial", Font.BOLD, 90));
 				
 				if(j%2 == 0  && i%2 == 0 ) {
@@ -83,7 +79,6 @@ public class Tabuleiro extends JPanel implements ActionListener{
 		for(int i = 0; i < 64; i++){
 			
 			jogada = 0;
-			System.out.printf("Jogada nº%d\n", i+1);
 			
 			//Atualiza os valores do array acessabilidade, de acordo com a posição do cavalo.
 			for(int x = 0; x < 8; x++){
@@ -151,31 +146,56 @@ public class Tabuleiro extends JPanel implements ActionListener{
 			
 			tabuleiro[linhaAtual][colunaAtual] = i+1;
 			
-			System.out.println(linhaAtual);
-			System.out.println(colunaAtual);
 			
 			}
 		
 
 	}
 	
-	@Override
-	public void paintComponent(Graphics g) {
-
-		
-
-	}
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		
-		casaTabuleiro[aleatorio.nextInt(8)][aleatorio.nextInt(8)].setBackground(Color.BLUE);
+		if(jogadaAtual <= 64) {
+			
+			final int[] casaAtual = retornaProximaJogada();
+			
+			casaTabuleiro[casaAtual[0]][casaAtual[1]].setText(String.format("%d", jogadaAtual++));
+			
+			repaint();
+		}else {
+			
+			tempo.stop();
+			
+		}
 		
-		repaint();
+	
+		
 		
 	}
 	
-	
+	public int[] retornaProximaJogada() {
+		
+		int[] posicao = new int[2];
+		
+		for(int i = 0; i < 8; i++) {
+			
+			for(int j = 0; j < 8; j++) {
+				
+				if(tabuleiro[i][j] == jogadaAtual) {
+					
+					posicao[0] = i;
+					posicao[1] = j;
+					return posicao;
+					
+				}
+				
+			}
+			
+		}
+		
+		return posicao;
+	}
 	
 	
 	
